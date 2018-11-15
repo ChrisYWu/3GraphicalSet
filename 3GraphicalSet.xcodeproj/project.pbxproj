@@ -12,6 +12,10 @@
 		AAEB61B2219C92A000FFD793 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AAEB61B0219C92A000FFD793 /* Main.storyboard */; };
 		AAEB61B4219C92A100FFD793 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAEB61B3219C92A100FFD793 /* Assets.xcassets */; };
 		AAEB61B7219C92A100FFD793 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AAEB61B5219C92A100FFD793 /* LaunchScreen.storyboard */; };
+		AAEB61BF219C935E00FFD793 /* DiamondView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAEB61BE219C935E00FFD793 /* DiamondView.swift */; };
+		AAEB61C2219C98E600FFD793 /* OvalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAEB61C1219C98E600FFD793 /* OvalView.swift */; };
+		AAEB61C4219C9DD700FFD793 /* SingleShapeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAEB61C3219C9DD700FFD793 /* SingleShapeView.swift */; };
+		AAEB61C6219C9EB900FFD793 /* SquiggleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAEB61C5219C9EB900FFD793 /* SquiggleView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +26,10 @@
 		AAEB61B3219C92A100FFD793 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AAEB61B6219C92A100FFD793 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AAEB61B8219C92A100FFD793 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AAEB61BE219C935E00FFD793 /* DiamondView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiamondView.swift; sourceTree = "<group>"; };
+		AAEB61C1219C98E600FFD793 /* OvalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OvalView.swift; sourceTree = "<group>"; };
+		AAEB61C3219C9DD700FFD793 /* SingleShapeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleShapeView.swift; sourceTree = "<group>"; };
+		AAEB61C5219C9EB900FFD793 /* SquiggleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquiggleView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +62,26 @@
 		AAEB61AB219C92A000FFD793 /* 3GraphicalSet */ = {
 			isa = PBXGroup;
 			children = (
-				AAEB61AC219C92A000FFD793 /* AppDelegate.swift */,
 				AAEB61AE219C92A000FFD793 /* ViewController.swift */,
 				AAEB61B0219C92A000FFD793 /* Main.storyboard */,
 				AAEB61B3219C92A100FFD793 /* Assets.xcassets */,
-				AAEB61B5219C92A100FFD793 /* LaunchScreen.storyboard */,
 				AAEB61B8219C92A100FFD793 /* Info.plist */,
+				AAEB61BE219C935E00FFD793 /* DiamondView.swift */,
+				AAEB61C1219C98E600FFD793 /* OvalView.swift */,
+				AAEB61C5219C9EB900FFD793 /* SquiggleView.swift */,
+				AAEB61C3219C9DD700FFD793 /* SingleShapeView.swift */,
+				AAEB61C0219C985600FFD793 /* SupportingFiles */,
 			);
 			path = 3GraphicalSet;
+			sourceTree = "<group>";
+		};
+		AAEB61C0219C985600FFD793 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				AAEB61AC219C92A000FFD793 /* AppDelegate.swift */,
+				AAEB61B5219C92A100FFD793 /* LaunchScreen.storyboard */,
+			);
+			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -136,6 +156,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				AAEB61AF219C92A000FFD793 /* ViewController.swift in Sources */,
+				AAEB61C6219C9EB900FFD793 /* SquiggleView.swift in Sources */,
+				AAEB61BF219C935E00FFD793 /* DiamondView.swift in Sources */,
+				AAEB61C2219C98E600FFD793 /* OvalView.swift in Sources */,
+				AAEB61C4219C9DD700FFD793 /* SingleShapeView.swift in Sources */,
 				AAEB61AD219C92A000FFD793 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -282,6 +306,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = VWA95UCFV4;
 				INFOPLIST_FILE = 3GraphicalSet/Info.plist;
@@ -291,6 +316,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wupersonalteam47.internal.-GraphicalSet";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -300,6 +326,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = VWA95UCFV4;
 				INFOPLIST_FILE = 3GraphicalSet/Info.plist;
@@ -309,6 +336,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wupersonalteam47.internal.-GraphicalSet";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
