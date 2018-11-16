@@ -18,6 +18,12 @@ import UIKit
 
     private static var counter = 0
     override func draw(_ rect: CGRect) {
+        let path = UIBezierPath(rect: bounds)
+        UIColor.white.setFill()
+        UIColor.white.setStroke()
+        path.fill()
+        path.stroke()
+        
         SingleShapeView.counter += 1
         print("Redraw \(SingleShapeView.counter)")
         if isFaceUp {
@@ -45,9 +51,9 @@ import UIKit
 
         switch shape {
         case 0:
-            path.addArc(withCenter: CGPoint(x: bounds.maxX/2, y: bounds.maxX/2), radius: bounds.maxX/2, startAngle: CGFloat.pi, endAngle: 0.0, clockwise: true)
-            path.addLine(to: CGPoint(x:bounds.maxX, y:3*bounds.maxX/2 ))
-            path.addArc(withCenter: CGPoint(x: bounds.maxX/2, y: 3*bounds.maxX/2), radius: bounds.maxX/2, startAngle: 0.0, endAngle: CGFloat.pi, clockwise: true)
+            path.addArc(withCenter: CGPoint(x: bounds.maxX/2, y: bounds.maxX/2), radius: 0.45 * bounds.maxX, startAngle: CGFloat.pi, endAngle: 0.0, clockwise: true)
+            path.addLine(to: CGPoint(x: 0.95 * bounds.maxX, y:3*bounds.maxX/2 ))
+            path.addArc(withCenter: CGPoint(x: bounds.maxX/2, y: 3*bounds.maxX/2), radius: 0.45 * bounds.maxX, startAngle: 0.0, endAngle: CGFloat.pi, clockwise: true)
             path.close()
         case 1:
             path.move(to: CGPoint(x: bounds.maxX/2, y:0.0))
@@ -65,6 +71,8 @@ import UIKit
             path.addQuadCurve(to: CGPoint(x:0.486 * x, y: 0.907 * y), controlPoint: CGPoint(x: 0.779 * x, y: 0.965 * y))
             path.addQuadCurve(to: CGPoint(x:0.203 * x, y: 0.491 * y), controlPoint: CGPoint(x: 0.005 * x, y: 0.791 * y))
             path.addQuadCurve(to: CGPoint(x:0.103 * x, y: 0.181 * y), controlPoint: CGPoint(x: 0.345 * x, y: 0.291 * y))
+            
+            path.apply(CGAffineTransform(scaleX: 1.02, y: 1.0))
             
         default: break
         }

@@ -14,15 +14,15 @@
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="_GraphicalSet" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="redraw" id="8bC-Xf-vdC">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="JCa-oK-5HW" customClass="SingleShapeView" customModule="_GraphicalSet" customModuleProvider="target">
-                                <rect key="frame" x="16" y="68" width="343" height="686"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <view contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="JCa-oK-5HW" customClass="CardView" customModule="_GraphicalSet" customModuleProvider="target">
+                                <rect key="frame" x="16" y="303.66666666666669" width="343" height="214.66666666666669"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="JCa-oK-5HW" secondAttribute="height" multiplier="1:2" id="6AX-VP-Ds5"/>
+                                    <constraint firstAttribute="width" secondItem="JCa-oK-5HW" secondAttribute="height" multiplier="8:5" id="6AX-VP-Ds5"/>
                                     <constraint firstAttribute="width" priority="750" constant="2000" id="MlZ-vE-z4h"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
@@ -30,12 +30,15 @@
                                         <integer key="value" value="2"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="color">
-                                        <color key="value" red="0.0" green="0.97680455450000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="value" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="strokeWidth">
                                         <real key="value" value="5"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shade">
+                                        <integer key="value" value="0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="number">
                                         <integer key="value" value="1"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
