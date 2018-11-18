@@ -12,7 +12,7 @@ class ViewController: UIViewController {
     var game = SetGame()
 
     private var deal3MoreButtonBgColor: UIColor? = nil
-    private var initialDispense = 6
+    private var initialDispense = 12
 
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var deal3MoreButton: UIButton!
@@ -113,7 +113,6 @@ class ViewController: UIViewController {
         }
 
         if let matchingSet = game.findAMatchSet() {
-            //print ("match set found \(matchingSet.description)")
             for card in matchingSet {
                 cardsArea.setCardDisplayState(card, displayState: .suggested)
             }
