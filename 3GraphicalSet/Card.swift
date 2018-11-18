@@ -10,7 +10,6 @@
 import Foundation
 
 struct Card : Hashable, CustomStringConvertible{
-    var indexInDeck = 0
     var color = 0
     var number = 0
     var symbol = 0
@@ -23,15 +22,7 @@ struct Card : Hashable, CustomStringConvertible{
     }
     
     var description: String {
-        return "index=\(indexInDeck), state=\(state)" + shortDescription
-    }
-    
-    var isCardOnTable: Bool {
-        return state == .onDisplay || state == .chosen || state == .matched
-    }
-    
-    var canChoose: Bool {
-        return state == .onDisplay || state == .chosen
+        return "state=\(state) " + shortDescription
     }
     
     func matchesWithOtherTwo(firstCard: Card, secondCard: Card) -> Bool {
@@ -50,8 +41,5 @@ struct Card : Hashable, CustomStringConvertible{
 enum CardState: Int {
     case inDeck = 0
     case onDisplay = 1
-    case chosen = 2
-    case matched = 3
-    case recycled = 4
-    
+    case recycled = 2
 }

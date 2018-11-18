@@ -10,24 +10,41 @@ import Foundation
 
 class SetGame: CustomStringConvertible {
     // MARK: Instance variables
-    private var chosenCardIndeces = [Int]()
     private var runnerIndex = 0
-    var scale = 1.0
+
+    private var chosenCards = [Card]()
+    
+    var scale: Double {
+        if numberOfCardsOnTable > 12 {
+            return Double(numberOfCardsOnTable) / 12.0
+        }
+        else {
+            return 1.0
+        }
+    }
+    
     var scaledScore = 0.0
-    var cards = [Card]()
-    var dimension = 4
+    private var cards = [Card]()
+    private var dimension = 4
     
     // MARK: APIs
     var numberOfCardsOnTable: Int {
-        return cards.filter{ $0.isCardOnTable }.count
+        return cards.filter{ $0.state == CardState.onDisplay }.count
+    }
+    
+    var canChooseMore: Bool {
+        return chosenCards.count < 3
+    }
+    
+    func isTheCardSelected(_ card: Card) -> Bool {
+        return chosenCards.contains(card)
     }
     
     var shortDescription: String {
         var retval = ""
         retval = "runnerIndex = \(runnerIndex)\n"
-        retval += "chosen Indices = \(chosenCardIndeces.description)\n"
         retval += "total cards on display = \(cards.filter{ $0.state == .onDisplay }.count)\n"
-        retval += "total cards chosen = \(cards.filter{ $0.state == .chosen }.count)\n"
+        retval += "total cards chosen = \(chosenCards.count)\n"
         
         return retval
     }
@@ -47,15 +64,13 @@ class SetGame: CustomStringConvertible {
     // MARK: Init(dim)
     init() {
         var card = Card()
-        chosenCardIndeces = [Int]()
         runnerIndex = 0
-        //score = 0
-        scale = 1.0
         scaledScore = 0.0
         
         for firstRound in 0...2
         {
             card.color = firstRound
+            card.state = .inDeck
             for secondRound in 0...2
             {
                 card.number = secondRound
@@ -91,79 +106,46 @@ class SetGame: CustomStringConvertible {
             }
         }
         
+        //Swap the last card
         let v = cards.count.arc4random
-        //print("count=\(cards.count), random=\(v)")
         cards.insert(cards[cards.count - 1], at: v)
-        
-        //print("count=\(cards.count)")
         cards.remove(at: cards.count - 1)
         
-        //Set the index
-        for index in 0 ..< cards.count {
-            cards[index].indexInDeck = index
-        }
+    }
+    
+    func selectCard(_ card: Card) {
+        chosenCards.append(card)
+    }
+    
+    func deselectCard(_ card: Card) {
+        chosenCards.removeAll(where: {$0 == card})
+    }
+    
+    func recyleAllSelectedCards() {
         
-        var sameCardFound = false
-        for i1 in 0 ..< cards.count {
-            for i2 in 0 ..< cards.count {
-                if (i1 != i2 ) && (cards[i1] == cards[i2]) {
-                    print("Bad Deck: Same cards found: card1 = \(cards[i1].description) card2 = \(cards[i2].description)")
-                    sameCardFound = true
-                    break
-                }
+        for card in chosenCards {
+            if let index = cards.index(of: card) {
+                cards[index].state = .recycled
             }
         }
-        if (!sameCardFound)
-        {
-            print("Good deck")
-            //print(cards.description)
-        }
-    }
-    
-    func chooseCard(index: Int) -> Bool {
-        if chosenCardIndeces.count < 3, cards.indices.contains(index), cards[index].canChoose {
-            cards[index].state = .chosen
-            chosenCardIndeces.append(index)
-            return true
-        }
-        else {
-            return false
-        }
-    }
-    
-    func deselectCard(index: Int) {
-        if chosenCardIndeces.contains(index), cards.indices.contains(index), cards[index].state == .chosen {
-            cards[index].state = .onDisplay
-            chosenCardIndeces.removeAll(where: {$0 == index})
-        }
-    }
-    
-    func setChosen3Matched()
-    {
-        for index in chosenCardIndeces {
-            cards[index].state = .matched
-        }
+        chosenCards.removeAll()
     }
     
     func deselectAll() {
-        for index in chosenCardIndeces.indices {
-            if cards[chosenCardIndeces[index]].state == .chosen {
-                cards[chosenCardIndeces[index]].state = .onDisplay
-            }
-        }
-        chosenCardIndeces.removeAll()
+        chosenCards.removeAll()
     }
     
-    func drawNextCardForDisplay(replacedWith recycleIndex: Int?) -> Card? {
-        if let index = recycleIndex, cards.indices.contains(index) {
-            cards[index].state = .recycled
-        }
-        
+    func resetAllSelected() -> [Card] {
+        let retval = chosenCards
+        chosenCards.removeAll()
+        return retval
+    }
+    
+    func drawNextCardForDisplay() -> Card? {
         var retval: Card?
         if hasMoreCardsInDeck {
             cards[runnerIndex].state = .onDisplay
-            retval = cards[runnerIndex]
-            
+            retval = cards[runnerIndex]            
             runnerIndex += 1
         }
         else {
@@ -172,30 +154,45 @@ class SetGame: CustomStringConvertible {
         return retval
     }
     
-    func isTheChosen3ASet() -> Bool {
-        assert(chosenCardIndeces.count < 4, "Internal error, more than 3 cards chosen")
-        
-        var retval = false
-        if chosenCardIndeces.indices.count < 3 {
-            retval = false
+    func tryGetSelectedAsASet() -> (Bool, [Card]) {
+        if chosenCards.count == 3 {
+            if chosenCards[0].matchesWithOtherTwo(firstCard: chosenCards[1], secondCard: chosenCards[2]) {
+                return (true, chosenCards)
+            }
+            return (false, chosenCards)
         }
-        else if chosenCardIndeces.indices.count == 3 {
-            retval = cards[chosenCardIndeces[0]].matchesWithOtherTwo(firstCard: cards[chosenCardIndeces[1]], secondCard: cards[chosenCardIndeces[2]])
+        else {
+            return (false, [Card]())
         }
-        
-        return retval
     }
     
-    func findAMatchSet() -> [Int]? {
+    func findAMatchSet() -> [Card]? {
         for i1 in 0 ..< cards.count {
             for i2 in i1 + 1 ..< cards.count {
                 for i3 in i2 + 1 ..< cards.count {
                     if cards[i1].state == .onDisplay && cards[i2].state == .onDisplay && cards[i3].state == .onDisplay  && cards[i1].matchesWithOtherTwo(firstCard: cards[i2], secondCard: cards[i3]) {
-                        return [i1, i2, i3]
+                        return [cards[i1], cards[i2], cards[i3]]
                     }
                 }
             }
         }
         return nil
+    }
+    
+    func shuffle() {
+        for index in 0 ..< cards.count {
+            if cards[index].state != .recycled {
+                cards[index].state = .inDeck
+            }
+        }
+        
+        var newCards = cards.filter{$0.state == CardState.inDeck}
+        let newCardsCount = newCards.count
+        
+        runnerIndex = 0
+        cards = [Card]()
+        for _ in 0 ..< newCardsCount {
+            cards.insert(newCards.remove(at: newCards.count.arc4random), at: cards.count.arc4random)
+        }
     }
 }

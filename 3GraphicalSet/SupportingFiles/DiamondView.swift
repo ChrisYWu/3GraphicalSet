@@ -9,7 +9,7 @@
 import UIKit
 
 @IBDesignable
-class DiamondView: SingleShapeView {
+class DiamondView: SymbolView {
     
     override func draw(_ rect: CGRect) {
         let path = UIBezierPath()

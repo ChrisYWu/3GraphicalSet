@@ -8,30 +8,27 @@
 
 import UIKit
 
-@IBDesignable class SingleShapeView: UIView {
+@IBDesignable class SymbolView: UIView {
     
     @IBInspectable var color: UIColor = UIColor.lightGray  { didSet { setNeedsDisplay(); setNeedsLayout() } }
-    @IBInspectable var strokeWidth: CGFloat = CGFloat(3.0)  { didSet { setNeedsDisplay(); setNeedsLayout() } }
+    @IBInspectable var strokeWidth: CGFloat = CGFloat(1.0)  { didSet { setNeedsDisplay(); setNeedsLayout() } }
     @IBInspectable var shape: Int = 0  { didSet { setNeedsDisplay(); setNeedsLayout() } }
     @IBInspectable var shade: Int = 0 { didSet { setNeedsDisplay(); setNeedsLayout() }}
-    @IBInspectable var isFaceUp: Bool = true { didSet { setNeedsDisplay(); setNeedsLayout() }}
 
     private static var counter = 0
     override func draw(_ rect: CGRect) {
-        let path = UIBezierPath(rect: bounds)
+        //Draw the white background
+        var path = UIBezierPath(rect: bounds)
         UIColor.white.setFill()
         UIColor.white.setStroke()
         path.fill()
         path.stroke()
         
-        SingleShapeView.counter += 1
-        print("Redraw \(SingleShapeView.counter)")
-        if isFaceUp {
-            let path = UIBezierPath()
-
-            outlinePath(path)
-            drawWithPath(path)
-        }
+        //Draw the card face
+        path = UIBezierPath()
+        
+        outlinePath(path)
+        drawWithPath(path)
     }
     
     func strokeWithPath(_ path: UIBezierPath) {
@@ -45,21 +42,18 @@ import UIKit
     {
         let x = bounds.size.width
         let y = bounds.size.height
-        print("bounds = \(bounds)")
-        print(frame)
-        print(center)
 
         switch shape {
         case 0:
-            path.addArc(withCenter: CGPoint(x: bounds.maxX/2, y: bounds.maxX/2), radius: 0.45 * bounds.maxX, startAngle: CGFloat.pi, endAngle: 0.0, clockwise: true)
-            path.addLine(to: CGPoint(x: 0.95 * bounds.maxX, y:3*bounds.maxX/2 ))
-            path.addArc(withCenter: CGPoint(x: bounds.maxX/2, y: 3*bounds.maxX/2), radius: 0.45 * bounds.maxX, startAngle: 0.0, endAngle: CGFloat.pi, clockwise: true)
+            path.addArc(withCenter: CGPoint(x: x/2, y: x/2), radius: 0.45 * x, startAngle: CGFloat.pi, endAngle: 0.0, clockwise: true)
+            path.addLine(to: CGPoint(x: 0.95 * x, y:3*x/2 ))
+            path.addArc(withCenter: CGPoint(x: x/2, y: 3*x/2), radius: 0.45 * x, startAngle: 0.0, endAngle: CGFloat.pi, clockwise: true)
             path.close()
         case 1:
-            path.move(to: CGPoint(x: bounds.maxX/2, y:0.0))
-            path.addLine(to: CGPoint(x:bounds.maxX, y:bounds.maxY/2))
-            path.addLine(to: CGPoint(x:bounds.maxX/2, y:bounds.maxY))
-            path.addLine(to: CGPoint(x:0.0, y:bounds.maxY/2))
+            path.move(to: CGPoint(x: x/2, y: 0.03*y))
+            path.addLine(to: CGPoint(x: 0.97*x, y:y/2))
+            path.addLine(to: CGPoint(x:x/2, y:y*0.97))
+            path.addLine(to: CGPoint(x:0.03*x, y:y/2))
             path.close()
         case 2:
             path.move(to: CGPoint(x: 0.103 * x, y: 0.181 * y))
@@ -97,13 +91,14 @@ import UIKit
             
             let path1 = UIBezierPath()
             path1.lineWidth = 1.0
-            let x = bounds.size.width
-            let y = bounds.size.height
-
+            let x = Double(bounds.size.width)
+            let y = Double(bounds.size.height)
+            let stripStep = 5.0
+            let step = Int(y/stripStep)
             
-            for index in 1 ... 32 {
-                path1.move(to: CGPoint(x: 0, y: CGFloat(index) * y/32))
-                path1.addLine(to: CGPoint(x: x, y: CGFloat(index) * y/32))
+            for index in 1 ... step {
+                path1.move(to: CGPoint(x: 0, y: Double(index) * stripStep))
+                path1.addLine(to: CGPoint(x: x, y: Double(index) * stripStep))
                 path1.stroke()
             }
             

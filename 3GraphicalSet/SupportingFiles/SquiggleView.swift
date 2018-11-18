@@ -9,7 +9,7 @@
 import UIKit
 
 @IBDesignable
-class SquiggleView: SingleShapeView {
+class SquiggleView: SymbolView {
 
     override func draw(_ rect: CGRect) {
         let path = UIBezierPath()

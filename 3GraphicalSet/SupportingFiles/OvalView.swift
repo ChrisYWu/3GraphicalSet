@@ -9,7 +9,7 @@
 import UIKit
 
 @IBDesignable
-class OvalView: SingleShapeView {
+class OvalView: SymbolView {
     
     override func draw(_ rect: CGRect) {
         let path = UIBezierPath()
